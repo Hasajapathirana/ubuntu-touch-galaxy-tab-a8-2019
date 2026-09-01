@@ -1,0 +1,18 @@
+gtowifi:
+  Vendor: Samsung
+  Codename: gtowifi
+  Names:
+    - A8 2019
+    - gtowifi
+    - Samsung Tab A8 2019
+  PrettyName: Samsung Galaxy Tab A8 2019
+  DeviceType: tablet
+  GridUnit: 15
+  PrimaryOrientation:
+    - Portrait
+  SupportedOrientation:
+    - Portrait
+    - InvertedPortrait
+    - Landscape
+    - InvertedLandscape
+
