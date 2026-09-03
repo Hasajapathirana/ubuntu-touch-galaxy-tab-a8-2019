@@ -26,7 +26,7 @@ The tablet boot into GUI , most stuff work fine as per below table
 | **Storage** | 🟡 |  MicoSD card is untested |
 | **Package management** | ✅ |  |
 | **Core applications** | ✅ | Morph browser, File manager and Terminal launch and survive reboots |
-| **Waydroid** | 🟡 | Installs fine but doesn't boot up |
+| **Waydroid** | ✅ | |
 | **Audio** | ✅ | |
 | **USB gadget** | 🟡 | MTP works but default but config needs to be set up|
 | **Bluetooth** | ❌ | Configs are not set |
