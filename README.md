@@ -54,7 +54,8 @@ Notes - I will soon add a flashable till now you have to flash it manually
 
 **Warning flash this at your own risk**
 Requirments - Unlocked Bootloader, TWRP installed , sdcard or usbotg to flash boot.img (unless heimdall is used), A laptop or PC
-1. Using TWRP flash the boot.img to BOOT partition
-2. Wipe Data
-3. Now on the pc within the dir of ubuntu.img ( **If not rename rootfs.img to ubuntu.img**) and adb push ubuntu.img /data/
+1. You have to install LineageOS 20 for this from [here](https://lineage-archive.timschumi.net/build/21269) 
+2. Using TWRP flash the boot.img to BOOT partition or use heimdall
+3. Wipe Data
+4. Now on the pc within the location of ubuntu.img ( **If not rename rootfs.img to ubuntu.img**) and adb push ubuntu.img /data/
  
