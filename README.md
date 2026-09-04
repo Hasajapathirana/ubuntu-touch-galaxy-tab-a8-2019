@@ -42,7 +42,7 @@ Requires a Linux host and should be on the tab LineageOS 20 (anything higher or 
 ```bash
 git clone https://github.com/Hasajapathirana/ubuntu-touch-galaxy-tab-a8-2019.git samsung-gtowifi
 cd samsung-gtowifi
-sudo chmod 644 /overlay/system/etc/deviceinfo/devices/gtowifi.yaml
+sudo chmod 644 overlay/system/etc/deviceinfo/devices/gtowifi.yaml
 ./build.sh -b workdir
 ./build/prepare-fake-ota.sh ./out/device_gtowifi_usrmerge.tar.xz ota
 ./build/system-image-from-ota.sh ota/ubuntu_command images
