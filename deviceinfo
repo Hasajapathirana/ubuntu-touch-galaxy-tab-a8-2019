@@ -23,3 +23,4 @@ deviceinfo_bootimg_os_patch_level="2022-08-01"
 deviceinfo_dtbo="qcom/sdm429.dtb qcom/sdm429-mtp-P81081-overlay.dtbo"
 deviceinfo_kernel_use_dtc_ext=true
 deviceinfo_halium_version="13"
+deviceinfo_kernel_llvm_compile="true"
