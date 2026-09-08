@@ -1,0 +1,70 @@
+stages:
+  - build
+  - publish
+
+build_ubuntu_touch:
+  stage: build
+  image: ubuntu:24.04
+
+before_script:
+  - dpkg --add-architecture i386
+  - apt-get update
+  - DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      git gnupg flex bison gperf build-essential \
+      zip bzr curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \
+      libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \
+      libgl1-mesa-dev g++-multilib mingw-w64-i686-dev tofrodos \
+      python3-markdown libxml2-utils xsltproc zlib1g-dev:i386 schedtool \
+      liblz4-tool bc lzop imagemagick libncurses5 rsync \
+      python-is-python3 python2
+
+  script:
+    - git clone https://github.com/Hasajapathirana/ubuntu-touch-galaxy-tab-a8-2019.git samsung-gtowifi
+    - cd samsung-gtowifi
+    - chmod 644 overlay/system/etc/deviceinfo/devices/gtowifi.yaml
+    - ./build.sh -b workdir
+    - ./build/prepare-fake-ota.sh ./out/device_gtowifi_usrmerge.tar.xz ota
+    - ./build/system-image-from-ota.sh ota/ubuntu_command images
+    - ls -lh images/rootfs.img images/boot.img
+
+  artifacts:
+    paths:
+      - samsung-gtowifi/images/rootfs.img
+      - samsung-gtowifi/images/boot.img
+    expire_in: 1 month
+
+
+publish_images:
+  stage: publish
+
+  image: curlimages/curl:latest
+
+  needs:
+    - job: build_ubuntu_touch
+      artifacts: true
+
+  script:
+    - |
+      VERSION="${CI_COMMIT_SHORT_SHA}"
+
+      echo "Uploading ubuntu.img..."
+      curl --fail --progress-bar \
+        --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+        --upload-file samsung-gtowifi/images/rootfs.img \
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/ubuntu-touch-gtowifi/${VERSION}/rootfs.img"
+
+      echo "Uploading boot.img..."
+      curl --fail --progress-bar \
+        --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+        --upload-file samsung-gtowifi/images/boot.img \
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/ubuntu-touch-gtowifi/${VERSION}/boot.img"
+
+      echo ""
+      echo "======================================"
+      echo "Build published!"
+      echo "======================================"
+      echo "ubuntu.img:"
+      echo "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/ubuntu-touch-gtowifi/${VERSION}/rootfs.img"
+      echo ""
+      echo "boot.img:"
+      echo "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/ubuntu-touch-gtowifi/${VERSION}/boot.img"
