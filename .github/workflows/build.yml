@@ -1,0 +1,47 @@
+name: Building Ubuntu Touch
+
+on:
+  workflow_dispatch:
+
+env:
+  ADAPTATION_TOOLS_BRANCH: main
+  ADAPTATION_TOOLS_USE_BUILD_WRAPPER: 1
+  
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    
+    steps:
+       - name: Checkout
+         uses: actions/checkout@master
+         
+
+       - name: Add Dependencies 
+         run: |
+            apt update
+            apt install -y --no-install-recommends bc bison build-essential ca-certificates cpio curl fakeroot flex git kmod libelf-dev libssl-dev libtinfo5 lz4 python2 python3 sudo unzip wget xz-utils pahole libbpf-dev img2simg jq sudo wget xz-utils zstd
+            ln -s python2 /usr/bin/python
+  
+       - name: Building 
+         run: |
+             git clone -b $ADAPTATION_TOOLS_BRANCH https://gitlab.com/hasajapathirana2011/halium-generic-adaptation-build-tools.git build
+             '[ -z "$ADAPTATION_TOOLS_USE_BUILD_WRAPPER" ] && ./build/build.sh || ./build.sh'
+             DEVICE="$(source deviceinfo && echo $deviceinfo_codename)"
+             ./build/fetch-and-prepare-latest-ota.sh "24.04/arm64/android9plus/devel" "$DEVICE" ota
+             mkdir -p out
+             "./build/system-image-from-ota.sh ota/ubuntu_command out"
+             mv out/rootfs.img out/ubuntu.img
+             zstd --ultra -22 -T0 out/ubuntu.img
+             rm -f out/ubuntu.img
+
+          
+       - name: Release recovery
+         uses: softprops/action-gh-release@v1
+         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         with:
+          tag_name: ${{ github.run_id }}
+          name:  Ubuntu Touch Rootfs and Boot Image for gtowifi  
+          files: |
+           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/out/boot.img
+           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/out/ubuntu.img.zst 
