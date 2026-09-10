@@ -26,7 +26,7 @@ jobs:
              ./build/build.sh
              DEVICE="$(source deviceinfo && echo $deviceinfo_codename)"
              ./build/fetch-and-prepare-latest-ota.sh "24.04/arm64/android9plus/devel" "$DEVICE" ota
-             mkdir -p out
+             mkdir -p build/out
              "./build/system-image-from-ota.sh ota/ubuntu_command out"
              mv out/rootfs.img out/ubuntu.img
              zstd --ultra -22 -T0 out/ubuntu.img
