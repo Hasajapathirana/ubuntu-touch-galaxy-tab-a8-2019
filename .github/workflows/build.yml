@@ -30,6 +30,8 @@ jobs:
              ./build/fetch-and-prepare-latest-ota.sh "24.04/arm64/android9plus/devel" "$DEVICE" ota
              ./build/system-image-from-ota.sh ota/ubuntu_command images
              mv images/rootfs.img images/ubuntu.img
+             ls -l images/
+             whereami
              zstd --ultra -22 -T0 images/ubuntu.img
              rm -f images/ubuntu.img
 
