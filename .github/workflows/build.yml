@@ -34,7 +34,13 @@ jobs:
              zstd --ultra -22 -T0 images/ubuntu.img
              rm -f images/ubuntu.img
 
-          
+       - name: Patch boot.img 
+         run: |
+             mv images/boot.img images/temp.img
+             curl -L https://raw.githubusercontent.com/GalaxyA20s/A20s-Fix-Bootable-Image/refs/heads/main/fix_bootable_image.py -o fix_bootable_image.py
+             python3 fix_bootable_image.py images/temp.img images/boot.img
+
+        
        - name: Release recovery
          uses: softprops/action-gh-release@v1
          env:
@@ -43,5 +49,7 @@ jobs:
           tag_name: ${{ github.run_id }}
           name:  Ubuntu Touch Rootfs and Boot Image for gtowifi  
           files: |
-           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/images/boot.img
-           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/images/ubuntu.img.zst 
+           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/images/boot.img
+           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/images/ubuntu.img.zst
+  
+  
