@@ -1,4 +1,4 @@
-name: Building Ubuntu Touch
+name: Build Ubuntu Touch
 
 on:
   workflow_dispatch:
@@ -18,8 +18,8 @@ jobs:
 
        - name: Add Dependencies 
          run: |
-            apt update
-            apt install -y --no-install-recommends bc bison build-essential ca-certificates cpio curl fakeroot flex git kmod libelf-dev libssl-dev libtinfo5 lz4 python2 python3 sudo unzip wget xz-utils pahole libbpf-dev img2simg jq sudo wget xz-utils zstd
+            sudo apt update
+            sudo apt install -y --no-install-recommends bc bison build-essential ca-certificates cpio curl fakeroot flex git kmod libelf-dev libssl-dev libtinfo5 lz4 python2 python3 sudo unzip wget xz-utils pahole libbpf-dev img2simg jq sudo wget xz-utils zstd
             ln -s python2 /usr/bin/python
   
        - name: Building 
