@@ -5,7 +5,6 @@ on:
 
 env:
   ADAPTATION_TOOLS_BRANCH: main
-  ADAPTATION_TOOLS_USE_BUILD_WRAPPER: 1
   
 jobs:
   build:
@@ -24,7 +23,7 @@ jobs:
        - name: Building 
          run: |
              git clone -b $ADAPTATION_TOOLS_BRANCH https://gitlab.com/hasajapathirana2011/halium-generic-adaptation-build-tools.git build
-             '[ -z "$ADAPTATION_TOOLS_USE_BUILD_WRAPPER" ] && ./build/build.sh || ./build.sh'
+             ./build/build.sh
              DEVICE="$(source deviceinfo && echo $deviceinfo_codename)"
              ./build/fetch-and-prepare-latest-ota.sh "24.04/arm64/android9plus/devel" "$DEVICE" ota
              mkdir -p out
