@@ -23,14 +23,15 @@ jobs:
        - name: Building 
          run: |
              git clone -b $ADAPTATION_TOOLS_BRANCH https://gitlab.com/hasajapathirana2011/halium-generic-adaptation-build-tools.git build
+             sudo chmod 644 overlay/system/etc/deviceinfo/devices/gtowifi.yaml
+             ls
              ./build/build.sh
              DEVICE="$(source deviceinfo && echo $deviceinfo_codename)"
              ./build/fetch-and-prepare-latest-ota.sh "24.04/arm64/android9plus/devel" "$DEVICE" ota
-             mkdir -p build/out
-             "./build/system-image-from-ota.sh ota/ubuntu_command out"
-             mv out/rootfs.img out/ubuntu.img
-             zstd --ultra -22 -T0 out/ubuntu.img
-             rm -f out/ubuntu.img
+             ./build/system-image-from-ota.sh ota/ubuntu_command images
+             mv images/rootfs.img images/ubuntu.img
+             zstd --ultra -22 -T0 images/ubuntu.img
+             rm -f images/ubuntu.img
 
           
        - name: Release recovery
@@ -41,5 +42,5 @@ jobs:
           tag_name: ${{ github.run_id }}
           name:  Ubuntu Touch Rootfs and Boot Image for gtowifi  
           files: |
-           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/out/boot.img
-           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/out/ubuntu.img.zst 
+           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/images/boot.img
+           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/build/images/ubuntu.img.zst 
