@@ -25,10 +25,10 @@ The tablet boot into GUI , most stuff work fine as per below table
 | **Battery and charging** | ✅ |  |
 | **Storage** | 🟡 |  MicoSD card is untested |
 | **Package management** | ✅ |  |
-| **Core applications** | ✅ | Morph browser, File manager and Terminal launch and survive reboots |
+| **Core applications** | ✅ | Morph browser, File manager and Terminal launch  |
 | **Waydroid** | ✅ | |
 | **Audio** | ✅ | |
-| **USB gadget** | 🟡 | MTP works but default but config needs to be set up|
+| **USB gadget** | 🟡 | MTP works but usb-modded config needs to be set up|
 | **Bluetooth** | ❌ | Configs are not set |
 | **Cameras** | ❌ | Not started |
 
