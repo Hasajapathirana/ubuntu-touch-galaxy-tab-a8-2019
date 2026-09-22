@@ -1,5 +1,7 @@
 # Ubuntu Touch 24.04 for the Samsung Galaxy Tab A8 2019
 
+![Device](./Device.jpeg)
+
 Ubuntu Touch 24.04 port for the Galaxy Tab A8 2019 (gtowifi), Snapdragon 429
 
 Note - This port will work on both T290/T295  versions but sim card functionallity is not test
