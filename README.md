@@ -32,7 +32,7 @@ The tablet boot into GUI , most stuff work fine as per below table
 | **Audio** | ✅ | |
 | **USB gadget** | 🟡 | MTP works but usb-modded config needs to be set up|
 | **Bluetooth** | ❌ | Configs are not set |
-| **Cameras** | ❌ | Not started |
+| **Cameras** | ✅ | Camera works normally  |
 
 ✅ tested on the physical tablet · 🟡 partially working · ❌ known not to work
 or not integrated · ❔ not tested yet · — not applicable
