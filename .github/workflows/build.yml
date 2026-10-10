@@ -18,7 +18,7 @@ jobs:
        - name: Add Dependencies 
          run: |
             sudo apt update
-            sudo apt install -y --no-install-recommends bc bison build-essential ca-certificates cpio curl fakeroot flex git kmod libelf-dev libssl-dev libtinfo5 lz4 python2 python3 sudo unzip wget xz-utils pahole libbpf-dev img2simg jq sudo wget xz-utils zstd
+            sudo apt install -y --no-install-recommends bc bison build-essential ca-certificates cpio curl tar fakeroot flex git kmod libelf-dev libssl-dev libtinfo5 lz4 python2 python3 sudo unzip wget xz-utils pahole libbpf-dev img2simg jq sudo wget xz-utils zstd
   
        - name: Building 
          run: |
@@ -39,8 +39,9 @@ jobs:
              mv images/boot.img images/temp.img
              curl -L https://raw.githubusercontent.com/GalaxyA20s/A20s-Fix-Bootable-Image/refs/heads/main/fix_bootable_image.py -o fix_bootable_image.py
              python3 fix_bootable_image.py images/temp.img images/boot.img
+             tar --format=ustar -cvf boot.img.tar images/boot.img
 
-        
+                     
        - name: Release recovery
          uses: softprops/action-gh-release@v1
          env:
@@ -50,6 +51,7 @@ jobs:
           name:  Ubuntu Touch Rootfs and Boot Image for gtowifi  
           files: |
            /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/images/boot.img
+           /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/boot.img.tar
            /home/runner/work/ubuntu-touch-galaxy-tab-a8-2019/ubuntu-touch-galaxy-tab-a8-2019/images/ubuntu.img.zst
   
   
